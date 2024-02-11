@@ -9,7 +9,7 @@ import { getPageContent } from 'puppeteer';
     try {
         //for vid
          await page.waitForSelector('.css-1as5cen-DivWrapper.e1cg0wnj1')
-        const vids = await page.$('.css-1as5cen-DivWrapper.e1cg0wnj1 a')
+        const vids = await page.$$('.css-1as5cen-DivWrapper.e1cg0wnj1 a')
         //const html = await vids.evaluate(d => d.href)
         const html = await vids.evaluate((vids)=>{
             return vids.href
@@ -20,7 +20,7 @@ import { getPageContent } from 'puppeteer';
         await page.waitForSelector(".css-vi46v1-DivDesContainer.eih2qak4")
         const name = await page.$(".css-vi46v1-DivDesContainer.eih2qak4 div a")
         const text = await name.evaluate(d => d.textContent)
-        //console.log(text)
+        console.log(text)
         
     } catch (error) {
         console.log(error)
