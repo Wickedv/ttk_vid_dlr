@@ -1,32 +1,32 @@
 import puppeteer from 'puppeteer';
+import { timeout } from 'puppeteer';
+import { promises as fs } from 'fs';
+import url from 'env';
 import { getPageContent } from 'puppeteer';
 
 (async() => {    
-    const browser = await puppeteer.launch({headless: false, args: ['--no-sandbox'], userDataDir: './userData'});
+    const browser = await puppeteer.launch({headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox'], defaultViewport: null});
     const page = await browser.newPage();
-    await page.goto('https://tiktok.com/@underrated.musicc');
+    await page.goto("$(url)");
 
-    try {
-        //for vid
-         await page.waitForSelector('.css-1as5cen-DivWrapper.e1cg0wnj1')
-        const vids = await page.$$('.css-1as5cen-DivWrapper.e1cg0wnj1 a')
-        //const html = await vids.evaluate(d => d.href)
-        const html = await vids.evaluate((vids)=>{
-            return vids.href
-        })
-         console.log(html)
+    // Take a screenshot
+    const content = await page.content("body");
+    //const btn = await page.$('.css-u3m0da-DivBoxContainer');
+    await page.waitForSelector('.css-u3m0da-DivBoxContainer' || '.css-7u35li-DivBoxContainer.e1cgu1qo0'|| '.css-1as5cen-DivWrapper');
+
+    await page.click('.css-u3m0da-DivBoxContainer' || '.css-7u35li-DivBoxContainer.e1cgu1qo0');
+
+    const files = await page.$(".css-1as5cen-DivWrapper")
+
+    const filesString = JSON.stringify(files);
+    fs.writeFile('files.txt', filesString);
     
-    //for img
-        await page.waitForSelector(".css-vi46v1-DivDesContainer.eih2qak4")
-        const name = await page.$(".css-vi46v1-DivDesContainer.eih2qak4 div a")
-        const text = await name.evaluate(d => d.textContent)
-        console.log(text)
-        
-    } catch (error) {
-        console.log(error)
-    }
+    //fs.writeFile('btn.txt', btn);
+    //fs.writeFileSync('content.txt', content);
 
-    finally {
-    await browser.close()
-    }
+    console.log(files);
+    await page.screenshot({ path: 'screenshot.png' });
+    //console.log(content);
+
+   browser.close();
 })()
