@@ -178,3 +178,4 @@ userData/
 
 *.txt
 *png
+/myUserDataDir
