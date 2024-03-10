@@ -23,6 +23,10 @@ const randomProxy = proxyList[Math.floor(Math.random() * proxyList.length)];
     //await page.click('.css-u3m0da-DivBoxContainer' || '.css-7u35li-DivBoxContainer.e1cgu1qo0'); click on continue as guest button
 
     await page.waitForSelector('.css-1as5cen-DivWrapper'); //this the download button
+     await page.evaluate(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+
 
     //const files = await page.$$((".css-1as5cen-DivWrapper.e1cg0wnji"));
     const hrefs = await page.$eval('.css-1as5cen-DivWrapper', element => element.getAttribute('a'));
@@ -32,7 +36,7 @@ const randomProxy = proxyList[Math.floor(Math.random() * proxyList.length)];
         alt: img.getAttribute('alt')
     })));
    // console.log(cont);
-    console.log(imgData);
+//    console.log(imgData);
 
     const data = JSON.stringify(imgData);
     fs.writeFile('links.txt', data);
