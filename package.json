@@ -11,6 +11,8 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",
     "dotenv": "^16.4.5",
+    "mongodb": "^6.4.0",
+    "mongoose": "^8.2.1",
     "puppeteer": "^21.7.0",
     "selenium-webdriver": "^4.16.0"
   }
