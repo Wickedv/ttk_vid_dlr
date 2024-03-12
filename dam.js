@@ -1,9 +1,12 @@
-import supabase from "./connect";
+import connecttoDB from "./db.js";
 
-async() => {
+async  function run() {
+    connecttoDB();
+    console.log('Connected to the database');
+    const database = .db('ttk');
+    const collection = database.collection('ttk_fav');  
 
-    const { data, error } = await supabase
-        .from('ttk_fav')
-        .select('*');
-    }
-    console.log(data);
+    console.log(collection);
+}
+
+run();
