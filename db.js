@@ -12,24 +12,25 @@ const connectToDb = async () => {
         const client = await MongoClient.connect(url);
         console.log("Connected successfully to server");
 
-        const db = client.db(dbName);
-        const collection = db.collection(collectionName);
+        // const db = client.db(dbName);
+        // const collection = db.collection(collectionName);
 
         // Do something with the collection...
-        const cursor = collection.find({}); 
+        // const cursor = collection.find({}); 
 
         // Print documents
-        await cursor.forEach(doc => console.log(doc));
+        // await cursor.forEach(doc => console.log(doc));
 
         // Don't forget to close the connection when you're done
-        await client.close();
+        // await client.close();
     } catch (err) {
         console.error('An error occurred connecting to MongoDB: ', err);
         throw err; // re-throw the error unchanged
     }
 };
 
-connectToDb();
+// connectToDb();
+export default connectToDb;
 
 
 

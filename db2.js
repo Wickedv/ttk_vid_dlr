@@ -18,7 +18,7 @@ const connectToDb = async () => {
         console.log("Connected successfully to server");
 
         // Create a model using the schema
-        const Ttk = mongoose.model('Ttk', ttkSchema, 'ttk_fav');
+        const Ttk = mongoose.model('Ttk', ttkSchema, 'ttk');
 
         // Create a new document using the model
         const ttk = new Ttk({
