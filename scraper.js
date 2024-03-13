@@ -2,6 +2,7 @@ import puppeteer from "puppeteer";
 import { promises as fs } from "fs";
 import { config } from "dotenv";
 // import connectDB from "./connect.js";
+import mongoose from "mongoose";
 import {MongoClient} from 'mongodb';
 import { runInContext } from "vm";
 
@@ -14,13 +15,17 @@ const randomProxy = proxyList[Math.floor(Math.random() * proxyList.length)];
 
 
 (async () => {
-    const client = new MongoClient(process.env.Mongdb_uri);
-// console.log(client)
-    // try {
-        await client.connect();
-        console.log('Connected to the database');
-        const database = client.db('ttk');
-        const collection = database.collection('ttk_fav');
+    const client = mongoose.connect(process.env.mongodb_uri)
+    .then (() => console.log('Connected to MongoDB'))
+    .catch((err) => console.log(err));
+    const mydata = new mongoose.Schema({
+        src: {type:String, required:true},
+        alt: {type:String, required:true},
+        img: {type:String, required:true}
+    });
+
+    const dat = mongoose.model('mydata', mydata);
+
 
   const browser = await puppeteer.launch({
     headless: false,
@@ -49,6 +54,15 @@ const randomProxy = proxyList[Math.floor(Math.random() * proxyList.length)];
       alt: img.getAttribute("alt"),
     }))
   );
+
+  for (let item of imgData) {
+    let data = new dat({
+      src: item.src,
+      alt: item.alt,
+      img: "img",
+    });
+    await data.save();
+  }
 
   mydata.insertMany(imgData);
   // console.log(imgData);
