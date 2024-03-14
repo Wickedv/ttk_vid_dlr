@@ -179,3 +179,5 @@ userData/
 *.txt
 *png
 /myUserDataDir
+pickedVideos.json
+``` 
