@@ -102,7 +102,7 @@ let browser;
 let pickedVideos = [];
 // Load the history of picked videos from a file
 try {
-  pickedVideos = JSON.parse(fs.readFileSync('pickedVideos.txt', 'utf-8'));
+  pickedVideos = await JSON.parse(fs.readFileSync('pickedVideos.json', 'utf-8'));
 } catch (err) {
   // If the file does not exist, initialize pickedVideos as an empty array
   pickedVideos = [];
@@ -128,7 +128,7 @@ async function pickRandomVideo(dat) {
   }
 
 // Save the history of picked videos to a file
-  await fs.writeFile('pickedVideos.txt', JSON.stringify(pickedVideos));
+  await fs.writeFile('pickedVideos.json', JSON.stringify(pickedVideos));
   
   return video;
 }
@@ -157,12 +157,12 @@ async function pickRandomVideo(dat) {
     await page.goto(process.env.URL);
     await page.waitForSelector(".css-1as5cen-DivWrapper");
 
-    // await page.evaluate(async () => {
-    //   for (let i = 0; i < 10; i++) {
-    //     window.scrollTo(0, document.body.scrollHeight);
-    //     await new Promise((resolve) => setTimeout(resolve, 2000));
-    //   }
-    // });
+    await page.evaluate(async () => {
+      for (let i = 0; i < 10; i++) {
+        window.scrollTo(0, document.body.scrollHeight);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+    });
 
     const lnks = await page.$$eval(".css-1as5cen-DivWrapper > a", (el) =>
       el.map((x) => x.getAttribute("href"))
